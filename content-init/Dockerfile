@@ -1,15 +1,15 @@
-FROM node:alpine AS base
+FROM node:18-alpine AS base
 WORKDIR /usr/src/app
 
-FROM node:argon AS build
+FROM node:18-alpine AS build
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package.json /usr/src/app/
+COPY package*.json ./
 RUN npm install
 
 # Bundle app source
-COPY . /usr/src/app
+COPY . .
 
 FROM base as final
 WORKDIR /usr/src/app

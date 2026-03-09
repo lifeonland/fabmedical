@@ -1,5 +1,5 @@
 exports.appSettings = {
     db: (function(){
-        return process.env.MONGODB_CONNECTION || 'mongodb://localhost:27017/contentdb';
+        return process.env.MONGODB_CONNECTION || 'mongodb://mongodb:27017/contentdb';
     })()
 };

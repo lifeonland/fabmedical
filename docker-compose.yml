@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+
+  content-api:
+    build: ./content-api
+    container_name: content-api
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/contentdb
+    ports:
+      - "3001:3001"
+
+  content-web:
+    build: ./content-web
+    container_name: content-web
+    depends_on:
+      - content-api
+    ports:
+      - "3000:3000"
+    environment:
+    - CONTENT_API_URL=http://content-api:3001
+
+  content-init:
+    build: ./content-init
+    container_name: content-init
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/contentdb
